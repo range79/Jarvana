@@ -92,7 +92,7 @@
 
   async function runJar() {
     const id = document.getElementById("execId").value;
-    const json = await requestAPI("POST", `/exec/run/${id}`);
+    const json = await requestAPI("GET", `/exec/${id}`);
     document.getElementById("runResult").innerText = JSON.stringify(json, null, 2);
   }
 

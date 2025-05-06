@@ -1,5 +1,6 @@
 package com.range.jarvana.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -20,6 +21,7 @@ data class Execution(
     var endedAt: LocalDateTime?= null,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="Jar_id",nullable = false)
+    @JsonIgnore
     var jarFile: JarFile?=null
 
 )

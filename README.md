@@ -74,14 +74,7 @@ The frontend was prototyped with the help of ChatGPT, while the backend is fully
 
 ---
 
-## 🧭 Roadmap
-
-- [ ] Add authentication (JWT)
-- [ ] Save execution logs
-- [ ] WebSocket-based bi-directional output
-- [ ] Docker-friendly deployment support
-
----
+# changelog [click me](CHANGELOG.md)
 
 ## 🙌 Contributing
 

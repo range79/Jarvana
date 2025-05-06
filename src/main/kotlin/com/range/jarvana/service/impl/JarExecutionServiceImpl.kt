@@ -1,15 +1,19 @@
 package com.range.jarvana.service.impl
 
+import com.range.jarvana.dto.ExecutionResponseDto
 import com.range.jarvana.exception.ExecutionNotFound
 import com.range.jarvana.exception.JarFileNotFoundException
 import com.range.jarvana.exception.JarFileNotRunningException
+import com.range.jarvana.mapper.ExecutionMapper
 import com.range.jarvana.model.Execution
 import com.range.jarvana.model.ExecutionStatus
 import com.range.jarvana.repo.ExecutionRepository
 import com.range.jarvana.repo.JarRepository
 import com.range.jarvana.service.JarExecutionService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.io.BufferedReader
@@ -26,7 +30,7 @@ class JarExecutionServiceImpl(
     ): JarExecutionService {
     private val log = LoggerFactory.getLogger(javaClass)
     private val processMap: MutableMap<Long, Process> = mutableMapOf()
-    override fun run(id :Long): Execution {
+    override fun run(id :Long): ExecutionResponseDto {
         log.info("Executing jar execution with id $id")
         val jarFile = jarExecutionRepository.findById(id)
             .orElseThrow{
@@ -46,23 +50,24 @@ class JarExecutionServiceImpl(
                 .start()
 
             processMap[process.pid()] = process
-            return executionRepository.save(Execution(
+            val execution =  executionRepository.save( Execution(
                 executionStatus = ExecutionStatus.RUNNING,
                 pid = process.pid(),
                 jarFile = jarFile,
-                ))
+            ))
+
+            return ExecutionMapper.executionToExecutionResponseDto(execution)
         }
         catch (e: Exception) {
-
-            return executionRepository.save(Execution(
+            val execution =executionRepository.save( Execution(
                 executionStatus = ExecutionStatus.FAILED,
                 pid = null,
-                jarFile = jarFile,
-            ))
+                jarFile = jarFile))
+            return ExecutionMapper.executionToExecutionResponseDto(execution)
         }
     }
 
-    override fun stop(id: Long): Execution {
+    override fun stop(id: Long): ExecutionResponseDto{
         val execution = executionRepository.findById(id).orElseThrow{
             ExecutionNotFound("Execution with pid $id not found")
         }
@@ -78,6 +83,7 @@ class JarExecutionServiceImpl(
                 execution.executionStatus = ExecutionStatus.KILLED
                 execution.endedAt = LocalDateTime.now()
                 executionRepository.save(execution)
+                ExecutionMapper.executionToExecutionResponseDto(execution)
             } else {
                 throw ExecutionNotFound("Failed to kill process with pid $pid")
             }
@@ -86,11 +92,12 @@ class JarExecutionServiceImpl(
             execution.executionStatus = ExecutionStatus.FAILED
             execution.endedAt = LocalDateTime.now()
             executionRepository.save(execution)
+            ExecutionMapper.executionToExecutionResponseDto(execution)
         }}
 
     override fun read(id: Long): Flow<String> = flow {
         val execution: Execution = executionRepository.findById(id)
-            .orElseThrow{
+            .orElseThrow {
                 ExecutionNotFound("Could not find execution with id $id in repository")
             }
 
@@ -108,4 +115,5 @@ class JarExecutionServiceImpl(
         }
 
     }
+        .flowOn(Dispatchers.IO)
 }

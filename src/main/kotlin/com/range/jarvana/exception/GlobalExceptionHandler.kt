@@ -22,7 +22,7 @@ import java.io.FileNotFoundException
 
         @ExceptionHandler(ExecutionNotFound::class)
         fun handleExecNotFound(e: ExecutionNotFound): ResponseEntity<ResponseDto<Nothing>> {
-            log.error("ExecutionNotFound: ${e.message}")
+            log.error("ExecutionNotFound: ${e.message.toString()}")
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ResponseDto(false, e.message ?: "Execution not found"))
         }
