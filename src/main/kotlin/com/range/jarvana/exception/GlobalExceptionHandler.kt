@@ -1,6 +1,7 @@
 package com.range.jarvana.exception
 
 import com.range.jarvana.dto.ResponseDto
+
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -33,6 +34,12 @@ import java.io.FileNotFoundException
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ResponseDto(false, e.message ?: "File not found"))
         }
+        @ExceptionHandler(InvalidJarFileException::class)
+        fun handleInvalidFormat(e: InvalidJarFileException): ResponseEntity<ResponseDto<Nothing>> {
+            log.error("InvalidFormatException: ${e.message}")
+            return  ResponseEntity(ResponseDto(false, e.message ?: "Invalid format"), HttpStatus.BAD_REQUEST)
+        }
+
     }
 
 
