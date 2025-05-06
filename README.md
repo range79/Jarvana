@@ -12,7 +12,7 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 
 ## 🖼 Frontend Preview
 
-> 📸 **Screenshot Coming Soon**  
+
 > ![Jarvana Dashboard Screenshot](image/app.png)
 
 ---
@@ -43,7 +43,7 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 
 | Endpoint            | Method   | Description                          |
 |---------------------|----------|--------------------------------------|
-| `/exec/{id} `       | `GET`    | Start a `.jar` application           |
+| `/exec/{id}`        | `GET`    | Start a `.jar` application           |
 | `/exec/stop/{id}`   | `DELETE` | Stop a running application           |
 | `/exec/stream/{id}` | `GET`    | Live terminal output via SSE         |
 
@@ -53,6 +53,17 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 |-----------------------|----------|--------------------------------------|
 | `/info/{id}`          | `GET`    | Get metadata for a specific `.jar`   |
 | `/info/all`           | `GET`    | Get metadata for all `.jar` files    |
+
+---
+
+## ▶️ Getting Started
+
+After building and running the application:
+
+🔗 Open your browser and navigate to:  
+**[http://localhost:8080](http://localhost:8080)**
+
+This will take you directly to the **Jarvana Dashboard**, where you can start uploading and executing `.jar` files.
 
 ---
 
@@ -86,4 +97,4 @@ Issues and feature requests are always welcome!
 
 ## 📄 License
 
-MIT License © 2025 [Jarvana Project]
+MIT License © 2025 [Jarvana Project](LICENSE)
