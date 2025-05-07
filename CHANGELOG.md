@@ -21,3 +21,17 @@
 - Minor internal cleanup in `JarExecutionServiceImpl`.
 
 ---
+## 📦 Version 1.1.0
+
+### ✅ New Features
+- `deleteById(id)` method added to the service layer
+- Unit tests implemented for `JarStorageService` using JUnit 5 and Mockito
+
+### 🧪 Tests
+- Added tests for `upload`, `download`, `delete`, and `deleteAll` operations
+- Exception scenarios covered using `assertThrows`
+- `ArgumentCaptor` used to verify saved entity data
+
+### 🛠️ Improvements
+- Minor code refactoring and cleanups
+- Improved code readability and testability

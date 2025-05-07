@@ -1,6 +1,7 @@
 package com.range.jarvana.service.impl
 
 import JarStorageService
+import com.range.jarvana.dto.JarDownloadDto
 import com.range.jarvana.dto.JarMetadataDto
 import com.range.jarvana.exception.InvalidJarFileException
 import com.range.jarvana.exception.JarFileNotFoundException
@@ -43,6 +44,7 @@ class JarStorageServiceImpl(
                 data = multipartFile.bytes
             )
             log.info("Uploading jar metadata")
+            //save it to repository
             val saved = jarRepository.save(jarFile)
             log.info("Jar metadata saved: ${saved.name}")
             JarMetadataDto(
@@ -53,12 +55,15 @@ class JarStorageServiceImpl(
             )
         } catch (e: Exception) {
             log.error("file upload error")
-            throw InvalidJarFileException("File content type must not be null or empty")
+            throw InvalidJarFileException("Unexpected error while uploading jar metadata"+e.message.toString())
         }
     }
 
-    override fun download(id: Long): JarFile {
-        TODO("Not yet implemented")
+    override fun download(id: Long): JarDownloadDto {
+
+        val file = jarRepository.findById(id).orElseThrow{
+            JarFileNotFoundException("Jar file not found")}
+        return JarMapper.jarFileToJarDownload(file)
     }
 
 
@@ -68,7 +73,7 @@ class JarStorageServiceImpl(
     override fun delete(id: Long):JarMetadataDto {
         val jarFile = jarRepository.findById(id)
             .orElseThrow{JarFileNotFoundException("Jarfile not found with id: $id")}
-        jarRepository.delete(jarFile)
+        jarRepository.deleteById(id)
         return JarMapper.jarFileToJarMetadata(jarFile)
     }
 

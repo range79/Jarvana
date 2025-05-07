@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface JarRepository: JpaRepository<JarFile, Long> {
     fun existsJarFilesByName(name: String): Boolean
+    fun id(id: Long): MutableList<JarFile>
 }

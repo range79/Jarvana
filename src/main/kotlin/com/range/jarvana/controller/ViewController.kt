@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping
 class ViewController {
 @GetMapping("/")
 fun home(): String {
+
     return "main"
+
 }
     @GetMapping("/control-panel")
 fun controlPanel(): String {
+
     return "control"
+
 }
 
 }

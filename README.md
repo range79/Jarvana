@@ -33,11 +33,12 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 
 ### 🔼 Jar Management
 
-| Endpoint              | Method   | Description                          |
-|-----------------------|----------|--------------------------------------|
-| `/jars/upload`        | `POST`   | Upload a `.jar` file                 |
-| `/jars/delete/{id}`   | `DELETE` | Delete a specific `.jar`             |
-| `/jars/delete/all`    | `DELETE` | Delete all uploaded `.jar` files     |
+| Endpoint              | Method   | Description                      |
+|-----------------------|----------|----------------------------------|
+| `/jars/upload`        | `POST`   | Upload a `.jar` file             |
+| `/jars/delete/{id}`   | `DELETE` | Delete a specific `.jar`         |
+| `/jars/delete/all`    | `DELETE` | Delete all uploaded `.jar` files |
+| `/jars/download/{id}` | `GET`    | Download specific `.jar` file    |
 
 ### 🏃 Execution Control
 
