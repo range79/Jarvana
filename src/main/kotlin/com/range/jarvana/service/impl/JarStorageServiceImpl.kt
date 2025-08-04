@@ -18,20 +18,20 @@ class JarStorageServiceImpl(
 ) : JarStorageService {
 
     private val log = LoggerFactory.getLogger(JarStorageServiceImpl::class.java)
-    override fun upload(multipartFile: MultipartFile): JarMetadataDto {
-        //file name or file contenc is null throw a exception
-        if (multipartFile.contentType.isNullOrBlank() || multipartFile.originalFilename.isNullOrBlank()) {
+    override fun upload(file: MultipartFile): JarMetadataDto {
+
+        if (file.contentType.isNullOrBlank() || file.originalFilename.isNullOrBlank()) {
             log.error("MultipartFile content type is null or empty")
             throw InvalidJarFileException("File content type or name must not be null or empty")
         }
 
         return try {
             log.info("Uploading jar metadata")
-            var fileName = multipartFile.originalFilename!!
+            var fileName = file.originalFilename!!
             if (!fileName.endsWith(".jar")) {
                 throw InvalidJarFileException("File name must end with a .jar file")
             }
-            //if same name exits in database change the name file(1)
+
             if (jarRepository.existsJarFilesByName(fileName)) {
                 fileName = generateUniqueFilename(fileName) {
                     jarRepository.existsJarFilesByName(it)
@@ -40,8 +40,8 @@ class JarStorageServiceImpl(
 
             val jarFile = JarFile(
                 name = fileName,
-                size = multipartFile.size,
-                data = multipartFile.bytes
+                size = file.size,
+                data = file.bytes
             )
             log.info("Uploading jar metadata")
             //save it to repository

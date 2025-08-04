@@ -1,2 +1,5 @@
 package com.range.jarvana.exception
-class InvalidJarFileException(name:String):Exception(name)
+
+import org.springframework.http.HttpStatus
+
+class InvalidJarFileException(name:String): AbstractExceptionHandler(name, HttpStatus.BAD_REQUEST)

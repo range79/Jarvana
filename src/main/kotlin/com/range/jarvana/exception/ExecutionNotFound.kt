@@ -1,3 +1,6 @@
 package com.range.jarvana.exception
 
-class ExecutionNotFound(name:String):Exception(name)
+import org.springframework.http.HttpStatus
+import java.net.HttpURLConnection.HTTP_NOT_FOUND
+
+class ExecutionNotFound(name:String): AbstractExceptionHandler(name, HttpStatus.NOT_FOUND){}

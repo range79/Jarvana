@@ -1,3 +1,5 @@
 package com.range.jarvana.exception
 
-class JarFileNotFoundException(name:String):Exception(name)
+import org.springframework.http.HttpStatus
+
+class JarFileNotFoundException(name:String): AbstractExceptionHandler(name, HttpStatus.NOT_FOUND)

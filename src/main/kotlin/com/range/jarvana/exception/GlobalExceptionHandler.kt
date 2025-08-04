@@ -14,31 +14,21 @@ import java.io.FileNotFoundException
 
         private val log = LoggerFactory.getLogger(javaClass)
 
-        @ExceptionHandler(JarFileNotFoundException::class)
-        fun handleJarNotFound(e: JarFileNotFoundException): ResponseEntity<ResponseDto<Nothing>> {
+        @ExceptionHandler(AbstractExceptionHandler::class)
+        fun handleJarNotFound(e: AbstractExceptionHandler): ResponseEntity<ResponseDto<Nothing>> {
             log.error("JarFileNotFound: ${e.message}")
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            return ResponseEntity.status(e.httpStatus)
                 .body(ResponseDto(false, e.message ?: "Jar not found"))
         }
 
-        @ExceptionHandler(ExecutionNotFound::class)
-        fun handleExecNotFound(e: ExecutionNotFound): ResponseEntity<ResponseDto<Nothing>> {
+        @ExceptionHandler(Exception::class)
+        fun handleExecNotFound(e: Exception): ResponseEntity<ResponseDto<Nothing>> {
             log.error("ExecutionNotFound: ${e.message.toString()}")
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ResponseDto(false, e.message ?: "Execution not found"))
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ResponseDto(false, e.message ?: "Internal Server Error" ))
         }
 
-        @ExceptionHandler(FileNotFoundException::class)
-        fun handleFileNotFound(e: FileNotFoundException): ResponseEntity<ResponseDto<Nothing>> {
-            log.error("FileNotFoundException: ${e.message}")
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ResponseDto(false, e.message ?: "File not found"))
-        }
-        @ExceptionHandler(InvalidJarFileException::class)
-        fun handleInvalidFormat(e: InvalidJarFileException): ResponseEntity<ResponseDto<Nothing>> {
-            log.error("InvalidFormatException: ${e.message}")
-            return  ResponseEntity(ResponseDto(false, e.message ?: "Invalid format"), HttpStatus.BAD_REQUEST)
-        }
+
 
     }
 

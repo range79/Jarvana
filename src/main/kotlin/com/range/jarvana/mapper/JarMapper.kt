@@ -8,7 +8,7 @@ object JarMapper {
     fun jarFileToJarMetadata(jarFile: JarFile): JarMetadataDto {
 
         return JarMetadataDto(
-            id = jarFile.id!!,
+            id = jarFile.id,
             name = jarFile.name,
             createdAt = jarFile.createdAt,
             sizeInKb = jarFile.size,
