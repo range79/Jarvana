@@ -22,10 +22,12 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 | Layer        | Technology                      |
 |--------------|----------------------------------|
 | Backend      | Kotlin + Spring Boot             |
-| Frontend     | HTML + TailwindCSS               |
+| Frontend     | React + TypeScript + TailwindCSS |
 | Execution    | Java ProcessBuilder (Native)     |
 | Live Output  | Server-Sent Events (SSE)         |
 | Database     | H2 In-Memory Database            |
+| Build Tool   | Gradle                           |
+| API Docs     | OpenAPI/Swagger                  |
 
 ---
 
@@ -53,18 +55,57 @@ Jarvana was created to eliminate the need for terminal-based commands when worki
 | Endpoint              | Method   | Description                          |
 |-----------------------|----------|--------------------------------------|
 | `/info/{id}`          | `GET`    | Get metadata for a specific `.jar`   |
-| `/info/all`           | `GET`    | Get metadata for all `.jar` files    |
+| `/info/all`           | `GET`    | Get metadata for all `.jar` files with pagination |
+
+**Pagination Parameters for `/info/all`:**
+- `size` (default: 10) - Number of items per page
+- `page` (default: 0) - Page number (0-based)
+- `direction` (default: ASC) - Sort direction (ASC/DESC)
+- `properties` (default: id) - Sort by property name
 
 ---
 
 ## ▶️ Getting Started
 
-After building and running the application:
+### 🚀 Quick Start
+
+The easiest way to run Jarvana:
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd Jarvana
+
+# Start the backend server
+./gradlew bootRun
+```
+
+### 🔧 Manual Setup
+
+If you prefer to run components separately:
+
+```bash
+# Terminal 1: Start the backend
+./gradlew bootRun
+
+# Terminal 2: Start the frontend
+cd frontend
+npm install
+npm run dev
+```
+
+### 🌐 Access the Application
 
 🔗 Open your browser and navigate to:  
 **[http://localhost:8080](http://localhost:8080)**
 
 This will take you directly to the **Jarvana Dashboard**, where you can start uploading and executing `.jar` files.
+
+### 📋 Prerequisites
+
+- **Java 17+** (for running .jar files)
+- **Node.js 16+** (for frontend development)
+- **npm** (comes with Node.js)
 
 ---
 
