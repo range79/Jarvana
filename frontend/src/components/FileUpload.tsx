@@ -61,23 +61,23 @@ const FileUpload: React.FC<FileUploadProps> = ({
           className={cn(
             'border-2 border-dashed rounded-lg p-8 text-center transition-colors',
             isDragOver
-              ? 'border-primary-400 bg-primary-50'
-              : 'border-gray-300 hover:border-gray-400',
+              ? 'border-primary-400 dark:border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+              : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500',
             loading && 'opacity-50 pointer-events-none'
           )}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+          <Upload className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500 mb-4" />
           <div className="space-y-2">
-            <p className="text-lg font-medium text-gray-900">
+            <p className="text-lg font-medium text-gray-900 dark:text-white">
               Upload JAR File
             </p>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               Drag and drop your JAR file here, or click to browse
             </p>
-            <p className="text-xs text-gray-400">
+            <p className="text-xs text-gray-400 dark:text-gray-500">
               Supported formats: {acceptedFileTypes.join(', ')}
             </p>
           </div>
@@ -89,21 +89,21 @@ const FileUpload: React.FC<FileUploadProps> = ({
             id="file-upload"
             disabled={loading}
           />
-          <label
-            htmlFor="file-upload"
-            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 cursor-pointer transition-colors"
-          >
-            Choose File
-          </label>
+                      <label
+              htmlFor="file-upload"
+              className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/30 hover:bg-primary-200 dark:hover:bg-primary-900/50 cursor-pointer transition-colors"
+            >
+              Choose File
+            </label>
         </div>
       ) : (
-        <div className="border rounded-lg p-4 bg-gray-50">
+        <div className="border rounded-lg p-4 bg-gray-50 dark:bg-dark-800 border-gray-200 dark:border-dark-700">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <File className="h-8 w-8 text-primary-600" />
+              <File className="h-8 w-8 text-primary-600 dark:text-primary-400" />
               <div>
-                <p className="font-medium text-gray-900">{selectedFile.name}</p>
-                <p className="text-sm text-gray-500">
+                <p className="font-medium text-gray-900 dark:text-white">{selectedFile.name}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   {(selectedFile.size / 1024).toFixed(2)} KB
                 </p>
               </div>

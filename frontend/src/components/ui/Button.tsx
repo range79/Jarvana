@@ -20,11 +20,11 @@ const Button: React.FC<ButtonProps> = ({
   const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
   
   const variants = {
-    primary: 'bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500',
-    danger: 'bg-danger-600 text-white hover:bg-danger-700 focus-visible:ring-danger-500',
-    success: 'bg-success-600 text-white hover:bg-success-700 focus-visible:ring-success-500',
-    warning: 'bg-warning-600 text-white hover:bg-warning-700 focus-visible:ring-warning-500',
+    primary: 'bg-primary-600 dark:bg-primary-500 text-white hover:bg-primary-700 dark:hover:bg-primary-600 focus-visible:ring-primary-500',
+    secondary: 'bg-gray-100 dark:bg-dark-700 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-dark-600 focus-visible:ring-gray-500',
+    danger: 'bg-danger-600 dark:bg-danger-500 text-white hover:bg-danger-700 dark:hover:bg-danger-600 focus-visible:ring-danger-500',
+    success: 'bg-success-600 dark:bg-success-500 text-white hover:bg-success-700 dark:hover:bg-success-600 focus-visible:ring-success-500',
+    warning: 'bg-warning-600 dark:bg-warning-500 text-white hover:bg-warning-700 dark:hover:bg-warning-600 focus-visible:ring-warning-500',
   };
 
   const sizes = {

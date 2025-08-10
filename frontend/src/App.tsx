@@ -3,10 +3,14 @@ import Layout from './components/Layout';
 import FileUpload from './components/FileUpload';
 import JarList from './components/JarList';
 import ExecutionMonitor from './components/ExecutionMonitor';
-import { Card, CardContent, CardHeader } from './components/ui/Card';
+import ConnectionNotification from './components/ConnectionNotification';
+import { MaterialCard, MaterialCardContent, MaterialCardHeader } from './components/ui/MaterialCard';
+
 import { JarMetadataDto } from './types/api';
 import { jarApi } from './services/api';
-import { Upload, CheckCircle, AlertCircle } from 'lucide-react';
+import { Upload, CheckCircle, AlertCircle, Sparkles, Settings } from 'lucide-react';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ConnectionProvider } from './contexts/ConnectionContext';
 
 function App() {
   const [activeTab, setActiveTab] = useState('upload');
@@ -65,24 +69,27 @@ function App() {
     switch (activeTab) {
       case 'upload':
         return (
-          <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
+          <div className="max-w-2xl mx-auto animate-slide-in-right">
+            <MaterialCard elevation={3} hoverable animated>
+              <MaterialCardHeader>
                 <div className="flex items-center space-x-3">
-                  <Upload className="h-6 w-6 text-primary-600" />
-                  <h2 className="text-xl font-semibold text-gray-900">
+                  <div className="relative">
+                    <Upload className="h-6 w-6 text-primary-600 animate-wave" />
+                    <Sparkles className="h-3 w-3 text-secondary-500 absolute -top-1 -right-1 animate-pulse" />
+                  </div>
+                  <h2 className="text-xl font-semibold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                     Upload JAR File
                   </h2>
                 </div>
-              </CardHeader>
-              <CardContent>
+              </MaterialCardHeader>
+              <MaterialCardContent>
                 {uploadStatus.success ? (
-                  <div className="text-center py-8">
-                    <CheckCircle className="mx-auto h-12 w-12 text-success-600 mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">
+                  <div className="text-center py-8 animate-material-bounce">
+                    <CheckCircle className="mx-auto h-12 w-12 text-success-600 mb-4 animate-scale-in" />
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
                       Upload Successful!
                     </h3>
-                    <p className="text-gray-500">
+                    <p className="text-gray-500 dark:text-gray-400">
                       Your JAR file has been uploaded successfully.
                     </p>
                   </div>
@@ -93,17 +100,17 @@ function App() {
                       loading={uploadStatus.loading}
                     />
                     {uploadStatus.error && (
-                      <div className="mt-4 p-4 bg-danger-50 border border-danger-200 rounded-lg">
+                      <div className="mt-4 p-4 bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-lg animate-slide-in-left">
                         <div className="flex items-center space-x-2">
-                          <AlertCircle className="h-5 w-5 text-danger-600" />
-                          <p className="text-danger-700">{uploadStatus.error}</p>
+                          <AlertCircle className="h-5 w-5 text-danger-600 animate-pulse" />
+                          <p className="text-danger-700 dark:text-danger-300">{uploadStatus.error}</p>
                         </div>
                       </div>
                     )}
                   </>
                 )}
-              </CardContent>
-            </Card>
+              </MaterialCardContent>
+            </MaterialCard>
           </div>
         );
 
@@ -125,47 +132,50 @@ function App() {
 
       case 'settings':
         return (
-          <div className="max-w-2xl mx-auto">
-            <Card>
-              <CardHeader>
-                <h2 className="text-xl font-semibold text-gray-900">
-                  Settings
-                </h2>
-              </CardHeader>
-              <CardContent>
+          <div className="max-w-2xl mx-auto animate-slide-in-left">
+            <MaterialCard elevation={3} hoverable animated>
+              <MaterialCardHeader>
+                <div className="flex items-center space-x-3">
+                  <Settings className="h-6 w-6 text-primary-600 animate-rotate-in" />
+                  <h2 className="text-xl font-semibold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                    Settings
+                  </h2>
+                </div>
+              </MaterialCardHeader>
+              <MaterialCardContent>
                 <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  <div className="animate-slide-in-right">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
                       API Configuration
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                           API Base URL
                         </label>
                         <input
                           type="text"
                           defaultValue="http://localhost:8080"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-dark-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-dark-800 text-gray-900 dark:text-white transition-colors"
                           readOnly
                         />
                       </div>
                     </div>
                   </div>
                   
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  <div className="animate-slide-in-right" style={{ animationDelay: '0.1s' }}>
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
                       Application Info
                     </h3>
-                    <div className="space-y-2 text-sm text-gray-600">
+                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                       <p><strong>Version:</strong> 1.0.0</p>
                       <p><strong>Environment:</strong> Development</p>
                       <p><strong>Backend Status:</strong> Connected</p>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </MaterialCardContent>
+            </MaterialCard>
           </div>
         );
 
@@ -175,9 +185,14 @@ function App() {
   };
 
   return (
-    <Layout activeTab={activeTab} onTabChange={setActiveTab}>
-      {renderContent()}
-    </Layout>
+    <ThemeProvider>
+      <ConnectionProvider>
+        <ConnectionNotification />
+        <Layout activeTab={activeTab} onTabChange={setActiveTab}>
+          {renderContent()}
+        </Layout>
+      </ConnectionProvider>
+    </ThemeProvider>
   );
 }
 

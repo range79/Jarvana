@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Download, Trash2, Play, Clock, FileText } from 'lucide-react';
+import { Download, Trash2, Play, Clock, FileText, WifiOff } from 'lucide-react';
 import { JarMetadataDto } from '../types/api';
 import { jarApi, jarInfoApi } from '../services/api';
 import { Card, CardContent } from './ui/Card';
 import Button from './ui/Button';
+import { useConnection } from '../contexts/ConnectionContext';
 
 interface JarListProps {
   onJarSelect?: (jar: JarMetadataDto) => void;
@@ -11,6 +12,7 @@ interface JarListProps {
 }
 
 const JarList: React.FC<JarListProps> = ({ onJarSelect, refreshTrigger }) => {
+  const { isConnected } = useConnection();
   const [jars, setJars] = useState<JarMetadataDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -108,6 +110,27 @@ const JarList: React.FC<JarListProps> = ({ onJarSelect, refreshTrigger }) => {
           <div className="flex items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
             <span className="ml-2 text-gray-600">Loading JAR files...</span>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (!isConnected) {
+    return (
+      <Card>
+        <CardContent>
+          <div className="text-center py-8">
+            <WifiOff className="mx-auto h-12 w-12 text-danger-500 mb-4 animate-pulse" />
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+              Backend Disconnected
+            </h3>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">
+              Unable to fetch JAR files. Please check your backend connection.
+            </p>
+            <Button onClick={fetchJars} variant="primary">
+              Retry Connection
+            </Button>
           </div>
         </CardContent>
       </Card>

@@ -23,7 +23,7 @@ interface CardFooterProps {
 
 const Card: React.FC<CardProps> = ({ children, className }) => {
   return (
-    <div className={cn('rounded-lg border bg-white shadow-sm', className)}>
+    <div className={cn('rounded-lg border bg-white dark:bg-dark-800 border-gray-200 dark:border-dark-700 shadow-sm dark:shadow-lg transition-colors duration-300', className)}>
       {children}
     </div>
   );
