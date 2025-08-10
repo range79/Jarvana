@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 class ExecutionController(private val executionService: JarExecutionService) {
     @GetMapping("/{id}")
     fun getExecution(@PathVariable("id") id: Long):ResponseEntity<ResponseDto<ExecutionResponseDto>>  {
-        return ResponseEntity.ok(ResponseDto<ExecutionResponseDto>(
+        return ResponseEntity.ok(ResponseDto(
             success = true,
             message =  "execution $id",
             data = executionService.run(id)
@@ -29,18 +29,22 @@ class ExecutionController(private val executionService: JarExecutionService) {
     }
     @DeleteMapping("/stop/{id}")
     fun stopExecution(@PathVariable("id") id: Long):ResponseEntity<ResponseDto<ExecutionResponseDto>>  {
-        return ResponseEntity.ok(ResponseDto<ExecutionResponseDto>(
+        return ResponseEntity.ok(ResponseDto(
             success = true,
             message =  "execution $id",
             data = executionService.stop(id)
         )
         )
 
+
     }
+
     @GetMapping("/stream/{id}", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun streamExecution(@PathVariable id: Long): Flow<String> {
         return executionService.read(id)
+
     }
+
 
 
 }
