@@ -1,3 +1,4 @@
+
 ## 📦 Version 1.0.1 – DTOs & Loop Fix
 
 ### ✅ Added
@@ -35,3 +36,23 @@
 ### 🛠️ Improvements
 - Minor code refactoring and cleanups
 - Improved code readability and testability
+## 📦 Version 1.2.0 – API Enhancement & Frontend Automation
+
+### ✅ New Features
+- **Pagination Support**: Implemented pagination and sorting for jar listing with configurable page size and direction
+- **Swagger/OpenAPI Documentation**: Added comprehensive API documentation annotations for all endpoints
+- **PID-based Execution Lookup**: Enhanced execution repository with PID-based search functionality
+
+### 🛠️ Changed
+- **Simplified API Responses**: Removed ResponseDto wrapper for cleaner, more direct API responses
+- **Execution Stop Method**: Changed stop execution to return void for cleaner API design
+- **Jar Metadata Service**: Updated to support pagination with size, page, direction, and properties parameters
+
+### 🐞 Fixed
+- **Exception Handling**: Improved error handling in execution service with better logging
+- **API Consistency**: Standardized response formats across all endpoints
+
+### 🚀 Developer Experience
+- **Better Documentation**: All API endpoints now have proper OpenAPI documentation
+
+---

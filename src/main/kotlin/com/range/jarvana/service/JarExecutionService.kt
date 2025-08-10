@@ -8,6 +8,6 @@ import kotlinx.coroutines.flow.flow
 
 interface JarExecutionService {
     fun run(id:Long): ExecutionResponseDto
-    fun stop(id: Long): ExecutionResponseDto
+    fun stop(id: Long)
     fun read(id: Long): Flow<String> = flow {  }
 }

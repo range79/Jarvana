@@ -41,8 +41,6 @@ class JarExecutionServiceImpl(
         val filePath = "$tmpDir/${jarFile.name}"
 
         val tempFile = File(filePath)
-
-        //write data to tempfile
         tempFile.writeBytes(jarFile.data)
         try {
             val process = ProcessBuilder("java", "-jar", tempFile.absolutePath)
@@ -58,7 +56,7 @@ class JarExecutionServiceImpl(
 
             return ExecutionMapper.executionToExecutionResponseDto(execution)
         }
-        catch (e: Exception) {
+        catch (_: Exception) {
             val execution =executionRepository.save( Execution(
                 executionStatus = ExecutionStatus.FAILED,
                 pid = null,
@@ -67,13 +65,13 @@ class JarExecutionServiceImpl(
         }
     }
 
-    override fun stop(id: Long): ExecutionResponseDto{
+    override fun stop(id: Long){
+        log.info("Stopping jar execution with id $id")
         val execution = executionRepository.findById(id).orElseThrow{
             ExecutionNotFound("Execution with pid $id not found")
         }
         val pid =execution.pid
-        return try {
-            //kill the process
+      try {
             val process = Runtime.getRuntime().exec(arrayOf("kill", "-9", pid.toString()))
             process.destroy()
             process.waitFor()
