@@ -127,7 +127,7 @@ Clone the repository and run the backend server:
 
 ```bash
 git clone https://github.com/range79/Jarvana
-cd Jarvana
+cd Jarvana/backend
 
 # Start backend server
 ./gradlew bootRun
@@ -146,8 +146,9 @@ Open your browser and access:
 If you want to run frontend and backend separately:
 
 ```bash
-
+cd backend
 ./gradlew bootRun
+cd ..
 cd frontend
 npm install
 npm run dev
